@@ -15,13 +15,12 @@ while not rospy.is_shutdown():
     if(board.runStatus()):
         if not once:
             print("start programm")
-            print(sensors.lpsPosition())
             print(sensors.lpsVelocity())
             print(sensors.lpsYaw())
             print(sensors.gyro())
             print(sensors.accel())
             print(sensors.orientation())
             print(sensors.altitude())
-            print(sensors.range())
+            print(sensors.power())
             print("end of programm")
             once=True
