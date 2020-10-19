@@ -4,7 +4,6 @@
 import rospy
 from gs_sensors import SensorManager
 from gs_board import BoardManager
-from time import sleep
 
 rospy.init_node("sensor_test_node")
 board=BoardManager()
