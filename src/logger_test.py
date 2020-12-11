@@ -4,21 +4,20 @@
 import rospy
 from gs_board import BoardManager
 from gs_logger import Logger
-from gs_module import BoardLedController
+from time import sleep
 
 rospy.init_node("logger_test_node")
-once=False
-board=BoardManager()
-logger=Logger()
-ledbar=BoardLedController()
+board = BoardManager()
+logger = Logger()
 
-while not rospy.is_shutdown():
-    if(board.runStatus()):
-        if not once:
-            print("start of programm")
-            print(logger.lastMsgs())
-            ledbar.changeAllColor(1,0,0)
-            print(logger.lastMsgs())
-            print(logger.allMsgs())
-            print("end of programm")
-            once=True
+run = True
+
+while not rospy.is_shutdown() and run:
+    if board.runStatus():
+        print("start of programm")
+        print(logger.lastMsgs())
+        print(board.time())
+        print(logger.lastMsgs())
+        print(logger.allMsgs())
+        print("end of programm")
+        run = False

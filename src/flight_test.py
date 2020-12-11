@@ -2,38 +2,54 @@
 # -*- coding: utf-8 -*-
 
 import rospy
-from gs_flight import FlightController
+from gs_flight import FlightController, CallbackEvent
 from gs_board import BoardManager
 from time import sleep
-rospy.init_node("flight_node")
+rospy.init_node("flight_test_node")
 
-board=BoardManager()
-ap=FlightController()
+coordinates = [
+    [0,1,1],
+    [1,1,1],
+    [1,0,1],
+    [0,0,1]
+]
 
-once=False
-while not rospy.is_shutdown():
-    if (board.runStatus()):
-        if not once:
-            print("start of programm")
-            ap.preflight()
-            sleep(1)
-            print("preflight")
-            ap.takeoff()
-            print("takeoff")
-            sleep(0.5)
-            print("wait")
-            ap.goToLocalPoint(0,1,1)
-            print("gtlp1")
-            ap.goToLocalPoint(1,1,1)
-            print("gtlp2")
-            ap.goToLocalPoint(1,0,1)
-            print("gtlp3")
-            ap.goToLocalPoint(0,0,1)
-            print("gtlp4")
-            ap.updateYaw(1.5)
-            print("updy")
-            sleep(1)
+run = True
+position_number = 0
+
+def callback(event):
+    global ap
+    global run
+    global coordinates
+    global position_number
+
+    event = event.data
+    if event == CallbackEvent.ENGINES_STARTED:
+        print("engine started")
+        ap.takeoff()
+    elif event == CallbackEvent.TAKEOFF_COMPLETE:
+        print("takeoff complite")
+        position_number = 0
+        ap.goToLocalPoint(coordinates[position_number][0], coordinates[position_number][1], coordinates[position_number][2])
+    elif event == CallbackEvent.POINT_REACHED:
+        print("point {} reached".format(position_number))
+        position_number += 1
+        if position_number < len(coordinates):
+            ap.goToLocalPoint(coordinates[position_number][0], coordinates[position_number][1], coordinates[position_number][2])
+        else:
             ap.landing()
-            print("land")
-            print("end of programm")
-            once=True
+    elif event == CallbackEvent.COPTER_LANDED:
+        print("finish programm")
+        run = False
+
+board = BoardManager()
+ap = FlightController(callback)
+
+once = False
+
+while not rospy.is_shutdown() and run:
+    if board.runStatus() and not once:
+        print("start programm")
+        ap.preflight()
+        once = True
+    pass
