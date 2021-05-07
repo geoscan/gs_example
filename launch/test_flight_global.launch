@@ -1,0 +1,4 @@
+<launch>
+    <include file="$(find gs_core)/launch/pioneer.launch"/>
+    <node pkg="gs_example" type="flight_global_test.py" name="flight_global_test_node"/>
+</launch>

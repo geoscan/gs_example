@@ -6,7 +6,8 @@
 ## Состав пакета:
 1. Ноды:
     * board_test.py - пример получения бортовой информации
-    * flight_test.py - пример управления автопилотом
+    * flight_test.py - пример управления автопилотом в локальных координатах
+    * flight_global_test.py - пример управления автопилотом в глобальных координатах
     * led_test.py - пример управления светодиодами
     * logger_test.py - пример взаимодействия с логами
     * sensors_test.py - пример взаимодействия с бортовыми сенсорами
@@ -16,6 +17,7 @@
 2. Файлы запуска:
     * test_board.launch - пример запуска board_test
     * test_flight.launch - пример запуска flight_test
+    * test_flight_global.launch - пример запуска flight_global_test
     * test_led.launch - пример запуска led_test
     * test_sensors.launch - пример запуска sensors_test
     * test_navigation.launch - пример запуска navigation_test
