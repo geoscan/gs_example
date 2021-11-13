@@ -1,4 +1,4 @@
 <launch>
-    <include file="$(find gs_core)/launch/pioneer.launch"/>
+    <include file="$(find gs_simulation)/launch/pioneer-sim.launch"/>
     <node pkg="gs_example" type="board_test.py" name="board_test_node"/>
 </launch>

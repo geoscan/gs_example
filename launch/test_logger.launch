@@ -1,4 +1,0 @@
-<launch>
-    <include file="$(find gs_core)/launch/pioneer.launch"/>
-    <node pkg="gs_example" type="logger_test.py" name="logger_test_node"/>
-</launch>
